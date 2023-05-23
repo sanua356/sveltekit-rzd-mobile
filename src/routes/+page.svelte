@@ -1,4 +1,5 @@
 <script>
+	import Button from '../components/Button.svelte';
 </script>
 
 <svelte:head>
@@ -25,57 +26,51 @@
 		<hr class="stats__underline" />
 		<table class="table">
 			<thead class="thead">
-				<th>#</th>
-				<th>Дата поездки</th>
-				<th>Доход</th>
-				<th>Детали</th>
+				<th class="td__number">#</th>
+				<th class="td__date">Дата явки</th>
+				<th class="td__money">Доход</th>
+				<th class="td__details">Детали</th>
 			</thead>
 			<tbody class="tbody">
 				<tr>
-					<td>1</td>
-					<td>23.05.2023</td>
-					<td>3204₽</td>
-					<td><button>Подробнее</button></td>
+					<td class="td__number">1</td>
+					<td class="td__date">23.05.2023 19:07</td>
+					<td class="td__money">3204₽</td>
+					<td class="td__details"><button>Подробнее</button></td>
 				</tr>
 				<tr>
-					<td>1</td>
-					<td>23.05.2023</td>
-					<td>3204₽</td>
-					<td><button>Подробнее</button></td>
-				</tr><tr>
-					<td>1</td>
-					<td>23.05.2023</td>
-					<td>3204₽</td>
-					<td><button>Подробнее</button></td>
-				</tr><tr>
-					<td>1</td>
-					<td>23.05.2023</td>
-					<td>3204₽</td>
-					<td><button>Подробнее</button></td>
-				</tr><tr>
-					<td>1</td>
-					<td>23.05.2023</td>
-					<td>3204₽</td>
-					<td><button>Подробнее</button></td>
-				</tr><tr>
-					<td>1</td>
-					<td>23.05.2023</td>
-					<td>3204₽</td>
-					<td><button>Подробнее</button></td>
-				</tr><tr>
-					<td>1</td>
-					<td>23.05.2023</td>
-					<td>3204₽</td>
-					<td><button>Подробнее</button></td>
-				</tr><tr>
-					<td>1</td>
-					<td>23.05.2023</td>
-					<td>3204₽</td>
-					<td><button>Подробнее</button></td>
+					<td class="td__number">1</td>
+					<td class="td__date">23.05.2023 19:07</td>
+					<td class="td__money">3204₽</td>
+					<td class="td__details"><button>Подробнее</button></td>
+				</tr>
+				<tr>
+					<td class="td__number">1</td>
+					<td class="td__date">23.05.2023 19:07</td>
+					<td class="td__money">3204₽</td>
+					<td class="td__details"><button>Подробнее</button></td>
+				</tr>
+				<tr>
+					<td class="td__number">1</td>
+					<td class="td__date">23.05.2023 19:07</td>
+					<td class="td__money">3204₽</td>
+					<td class="td__details"><button>Подробнее</button></td>
+				</tr>
+				<tr>
+					<td class="td__number">1</td>
+					<td class="td__date">23.05.2023 19:07</td>
+					<td class="td__money">3204₽</td>
+					<td class="td__details"><button>Подробнее</button></td>
+				</tr>
+				<tr>
+					<td class="td__number">1</td>
+					<td class="td__date">23.05.2023 19:07</td>
+					<td class="td__money">3204₽</td>
+					<td class="td__details"><button>Подробнее</button></td>
 				</tr>
 			</tbody>
 		</table>
-		<button class="stats__button"> Новый доход </button>
+		<Button type="button" variant="red" fullWidth>Новый доход</Button>
 	</div>
 </section>
 
@@ -133,28 +128,26 @@
 		table-layout: fixed;
 		overflow-wrap: break-word;
 		text-align: center;
-	}
-	.table * {
-		width: 100%;
+		border-top-left-radius: 7px;
+		border-top-right-radius: 7px;
 	}
 	.thead {
-		background-color: #eeeeee;
+		background-color: #f3f5f7;
 	}
 	.thead th {
 		background-color: #eeeeee;
 		padding: 10px;
 		font-weight: 500;
 		font-size: 0.9rem;
-		border-left: 1px solid rgba(0, 0, 0, 0.3);
+		color: #666c76;
 	}
 	.tbody td {
 		padding: 10px;
-		border-left: 1px solid rgba(0, 0, 0, 0.3);
 		border-top: 1px solid rgba(0, 0, 0, 0.3);
 		font-size: 0.9rem;
 	}
-	.tbody tr:nth-child(2n) {
-		background-color: #ffe4e4;
+	.tbody tr {
+		width: 100%;
 	}
 	.tbody button {
 		border: none;
@@ -162,13 +155,16 @@
 		border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 		color: rgba(0, 0, 0, 0.6);
 	}
-	.stats__button {
-		margin-top: 20px;
+	.td__number {
+		width: 10%;
+	}
+	.td__date {
 		width: 100%;
-		border: none;
-		padding: 15px;
-		color: #fff;
-		background-color: #e21a1a;
-		border-radius: 7px;
+	}
+	.td__money {
+		width: 20%;
+	}
+	.td__details {
+		width: 40%;
 	}
 </style>
