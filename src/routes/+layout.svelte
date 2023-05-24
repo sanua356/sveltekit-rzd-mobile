@@ -18,6 +18,17 @@
 	}
 </script>
 
+<svelte:head>
+	<title>Расчет зарплаты РЖД</title>
+	<meta name="description" content="Расчет зарплаты помощника машиниста РЖД" />
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" />
+	<link
+		href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700&display=swap"
+		rel="stylesheet"
+	/>
+</svelte:head>
+
 <div class="app">
 	<main class="main" style="padding-bottom:{navPadding}px;">
 		<header class="header">
@@ -37,8 +48,8 @@
 					>
 				</li>
 				<li class="li">
-					<a href="/money" class:active={$page.url.pathname === '/money'}
-						><Icon src={BiCoinStack} size="25px" />Надбавки</a
+					<a href="/options" class:active={$page.url.pathname === '/options'}
+						><Icon src={BiCoinStack} size="25px" />Опции</a
 					>
 				</li>
 				<li class="li">

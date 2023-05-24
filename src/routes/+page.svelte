@@ -2,17 +2,6 @@
 	import Button from '../components/Button.svelte';
 </script>
 
-<svelte:head>
-	<title>Расчет зарплаты РЖД</title>
-	<meta name="description" content="Расчет зарплаты помощника машиниста РЖД" />
-	<link rel="preconnect" href="https://fonts.googleapis.com" />
-	<link rel="preconnect" href="https://fonts.gstatic.com" />
-	<link
-		href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700&display=swap"
-		rel="stylesheet"
-	/>
-</svelte:head>
-
 <section class="section">
 	<div class="info">
 		<h2 class="info__title">Доход с начала месяца:</h2>
