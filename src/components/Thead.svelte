@@ -24,4 +24,7 @@
 		font-size: 0.9rem;
 		color: #666c76;
 	}
+	.thead th:nth-child(2) {
+		width: 100%;
+	}
 </style>

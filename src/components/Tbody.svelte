@@ -1,17 +1,14 @@
 <script lang="ts">
-	interface iBody {
-		id: number;
-		value: string;
-		onClick?: (id: number) => void;
-	}
-	export let bodyRows: Array<iBody[]> = [];
+	import type { iBodyTable } from '$lib/utils/types';
+
+	export let bodyRows: Array<iBodyTable[]> = [];
 </script>
 
 <tbody class="tbody">
 	{#each bodyRows as row, i}
 		<tr>
 			<td>{i + 1}</td>
-			{#each row as { id, value, onClick } (id)}
+			{#each row as { id, value, onClick }, i}
 				<td>
 					{#if !onClick}
 						{value}
