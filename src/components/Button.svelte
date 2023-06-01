@@ -1,13 +1,13 @@
 <script lang="ts">
 	export let type: 'button' | 'submit' | 'reset',
-		variant: 'red',
+		variant: 'red' | 'gray',
 		onClick: () => void = () => {},
 		fullWidth: boolean = false,
 		isSlim: boolean = false;
 </script>
 
 <button
-	class={`button ${variant === 'red' ? 'red' : ''}`}
+	class={`button ${variant === 'red' ? 'red' : ''} ${variant === 'gray' ? 'gray' : ''}`}
 	class:isSlim
 	class:fullWidth
 	{type}
@@ -26,6 +26,11 @@
 	.button.red {
 		color: #fff;
 		background-color: #e21a1a;
+	}
+	.button.gray {
+		color: #000;
+		background-color: #efefef;
+		border: 1px solid rgba(0, 0, 0, 0.3);
 	}
 	.button.fullWidth {
 		width: 100%;

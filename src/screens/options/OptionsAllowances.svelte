@@ -2,6 +2,8 @@
 	import { IndexedDBLibrary } from '$lib/utils/indexeddb';
 	import type { iBodyTable } from '$lib/utils/types';
 	import { onMount } from 'svelte';
+	import Icon from 'svelte-icons-pack';
+	import VscClose from 'svelte-icons-pack/vsc/VscClose';
 	import Button from '../../components/Button.svelte';
 	import Modal from '../../components/Modal.svelte';
 	import Table from '../../components/Table.svelte';
@@ -10,6 +12,7 @@
 
 	const routesTableHead = [
 		{ width: '40%', title: 'Название' },
+		{ width: '40%', title: 'Проценты' },
 		{ width: '40%', title: 'Опции' }
 	];
 
@@ -20,11 +23,14 @@
 	}
 
 	let allowances: Array<iBodyTable[]>;
+	let modalAllowancePercents: Array<number>;
 	$: allowances = [];
 	$: isOpenedModalAllowance = false;
 	$: isOpenedDeleteAllowance = false;
 	$: selectedAllowance = { id: -1, title: '' };
 	$: modalAllowanceInput = '';
+	$: modalAllowanceInputPercent = '';
+	$: modalAllowancePercents = [];
 
 	onMount(async () => {
 		updateAllowances();
@@ -32,11 +38,12 @@
 
 	async function updateAllowances() {
 		const db = new IndexedDBLibrary('rzd', 'allowances');
-		const newRoutes = (await db.read()) as iAllowance[];
+		const newAllowances = (await db.read()) as iAllowance[];
 		let result: Array<iBodyTable[]> = [];
-		newRoutes.forEach((allowance) => {
+		newAllowances.forEach((allowance) => {
 			result.push([
 				{ id: allowance.id, value: allowance.title },
+				{ id: allowance.id, value: allowance.percents.toString().replaceAll(',', '\\') + '%' },
 				{
 					id: allowance.id,
 					value: 'Удалить',
@@ -53,12 +60,16 @@
 
 	async function onClickSaveAllowance() {
 		if (modalAllowanceInput.length > 0) {
-			const db = new IndexedDBLibrary('rzd', 'routes');
-			const isSaved = await db.write({ title: modalAllowanceInput, percents: [] });
+			const db = new IndexedDBLibrary('rzd', 'allowances');
+			const isSaved = await db.write({
+				title: modalAllowanceInput,
+				percents: modalAllowancePercents
+			});
 			if (isSaved) {
 				updateAllowances();
 				isOpenedModalAllowance = false;
 				modalAllowanceInput = '';
+				modalAllowancePercents = [];
 			}
 		}
 	}
@@ -70,6 +81,20 @@
 			isOpenedDeleteAllowance = false;
 			updateAllowances();
 		}
+	}
+
+	function onClickAddAllowancePercent() {
+		if (
+			!modalAllowancePercents.includes(Number(modalAllowanceInputPercent)) &&
+			Number(modalAllowanceInputPercent) !== 0
+		) {
+			modalAllowancePercents = [...modalAllowancePercents, Number(modalAllowanceInputPercent)];
+			modalAllowanceInputPercent = '';
+		}
+	}
+
+	function onClickDeleteAllowancePercent(idx: number) {
+		modalAllowancePercents = modalAllowancePercents.filter((_, idxArr) => idxArr !== idx);
 	}
 
 	async function getAllowanceNameFromId(id: number) {
@@ -109,17 +134,46 @@
 		<div class="modal__allowance">
 			<h3 class="allowance__title">Создать надбавку</h3>
 			<hr class="allowance__underline" />
-			<p class="allowance__description">
-				В данном окне вы можете создать новую надбавку, чтобы использовать её во время указания в
-				смене. Необходимо указать название надбавки и % от часов, который за неё платят.
-			</p>
+			<p class="allowance__description">Название надбавки:</p>
 			<input
 				type="text"
 				class="allowance__input"
 				placeholder="Например: Вредность"
 				bind:value={modalAllowanceInput}
 			/>
-			<Button type="button" variant="red" onClick={onClickSaveAllowance} isSlim>Сохранить</Button>
+			<p class="allowance__description">Сумма надбавки в %:</p>
+			<div class="allowance__percent">
+				<input
+					type="number"
+					class="allowance__input"
+					placeholder="Например: 4%"
+					bind:value={modalAllowanceInputPercent}
+				/>
+				<Button type="button" variant="gray" onClick={onClickAddAllowancePercent} isSlim
+					>Добавить</Button
+				>
+				{#if modalAllowancePercents.length > 0}
+					<div class="percents">
+						<span class="percents__title">Проценты надбавки: </span>
+						<hr class="allowance__underline" />
+						<div class="percents">
+							{#each modalAllowancePercents as percent, i}
+								<div class="percent">
+									<span>{percent}% в час</span>
+									<button
+										on:click={() => onClickDeleteAllowancePercent(i)}
+										class="percent__button_delete"><Icon src={VscClose} color={'#000'} /></button
+									>
+								</div>
+							{/each}
+						</div>
+					</div>
+				{/if}
+			</div>
+
+			<Button type="button" variant="red" onClick={onClickSaveAllowance} isSlim fullWidth
+				>Сохранить</Button
+			>
 		</div>
 	</Modal>
 	<Modal showModal={isOpenedDeleteAllowance} onClose={() => (isOpenedDeleteAllowance = false)}>
@@ -170,7 +224,7 @@
 		opacity: 0.7;
 	}
 	.modal__allowance {
-		padding: 15px;
+		padding: 25px;
 		background-color: #fff;
 		border-radius: 7px;
 	}
@@ -202,5 +256,25 @@
 		margin-top: 7px;
 		font-size: 0.9rem;
 		color: rgba(0, 0, 0, 0.6);
+	}
+	.percents {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		margin-top: 20px;
+	}
+	.percents__title {
+		font-size: 0.9rem;
+		font-weight: 300;
+	}
+	.percent {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 10px 0;
+	}
+	.percent__button_delete {
+		background-color: transparent;
+		border: none;
 	}
 </style>

@@ -20,14 +20,15 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <dialog bind:this={dialog} on:close={onClickClose} on:click|self={onClickClose}>
-	<div on:click|stopPropagation>
+	<div on:click|stopPropagation class="modal__wrapper">
 		<slot />
 	</div>
 </dialog>
 
 <style>
 	dialog {
-		max-width: 80vw;
+		max-width: 85vw;
+		width: 100%;
 		border-radius: 0.2em;
 		border: none;
 		padding: 10% 10px;
@@ -65,5 +66,8 @@
 		to {
 			opacity: 1;
 		}
+	}
+	.modal__wrapper {
+		width: 100%;
 	}
 </style>

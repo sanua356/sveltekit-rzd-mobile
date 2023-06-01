@@ -102,17 +102,16 @@
 		<div class="modal__route">
 			<h3 class="route__title">Создать точку маршрута</h3>
 			<hr class="route__underline" />
-			<p class="route__description">
-				В данном окне вы можете создать новую точку маршрута, чтобы использовать её во время
-				указания в смене
-			</p>
+			<p class="route__description">Название точки маршрута:</p>
 			<input
 				type="text"
 				class="route__input"
 				placeholder="Например: Муром"
 				bind:value={modalRouteInput}
 			/>
-			<Button type="button" variant="red" onClick={onClickSaveRoute} isSlim>Сохранить</Button>
+			<Button type="button" variant="red" onClick={onClickSaveRoute} isSlim fullWidth
+				>Сохранить</Button
+			>
 		</div>
 	</Modal>
 	<Modal showModal={isOpenedDeleteRoute} onClose={() => (isOpenedDeleteRoute = false)}>
@@ -160,7 +159,7 @@
 		opacity: 0.7;
 	}
 	.modal__route {
-		padding: 15px;
+		padding: 25px;
 		background-color: #fff;
 		border-radius: 7px;
 	}
