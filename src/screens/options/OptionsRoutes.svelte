@@ -2,11 +2,11 @@
 	import { IndexedDBLibrary } from '$lib/utils/indexeddb';
 	import type { iBodyTable } from '$lib/utils/types';
 	import { onMount } from 'svelte';
-	import Table from '../../components/Table.svelte';
-	import Thead from '../../components/Thead.svelte';
-	import Tbody from '../../components/Tbody.svelte';
 	import Button from '../../components/Button.svelte';
 	import Modal from '../../components/Modal.svelte';
+	import Table from '../../components/Table.svelte';
+	import Tbody from '../../components/Tbody.svelte';
+	import Thead from '../../components/Thead.svelte';
 
 	const routesTableHead = [
 		{ width: '40%', title: 'Название' },
@@ -76,15 +76,19 @@
 	}
 </script>
 
-<div class="routes">
+<div>
 	<div class="options">
 		<h3 class="options__title">Точки маршрута</h3>
 		<hr class="options__underline" />
 		<div class="routes">
-			<Table>
-				<Thead headNames={routesTableHead} />
-				<Tbody bodyRows={routes} />
-			</Table>
+			{#if routes.length > 0}
+				<Table>
+					<Thead headNames={routesTableHead} />
+					<Tbody bodyRows={routes} />
+				</Table>
+			{:else}
+				<span class="routes_empty">У вас не создано пока ни одного маршрута</span>
+			{/if}
 			<Button
 				type="button"
 				variant="red"
@@ -146,6 +150,14 @@
 		flex-direction: column;
 		padding-bottom: 15px;
 		border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+	}
+	.routes_empty {
+		text-align: center;
+		margin: 15px auto 0px auto;
+		display: block;
+		font-size: 1.1rem;
+		color: #000;
+		opacity: 0.7;
 	}
 	.modal__route {
 		padding: 15px;
